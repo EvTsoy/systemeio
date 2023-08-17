@@ -31,4 +31,10 @@ class HomeController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/success', name: 'app_success')]
+    public function success(): Response
+    {
+        return $this->render('home/success.html.twig');
+    }
 }

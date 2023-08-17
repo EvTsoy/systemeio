@@ -19,6 +19,12 @@ class TaxNumberValidator
         if (!$country) {
             return false;
         }
+
+        $pattern = "/{$country->getPattern()}/";
+
+        if (!preg_match($pattern, $taxNumber)) {
+            return false;
+        }
         return $country;
     }
 }

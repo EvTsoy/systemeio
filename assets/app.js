@@ -33,39 +33,71 @@ $(document).ready(function () {
 
     $(inputSelector).removeClass('border border-success');
 
-    if ($(inputSelector).val().length) {
-      $.ajax({
-        url:
-          '/api/tax-number-validation?' +
-          $.param({ product, taxNumber, couponCode }),
-        type: 'GET',
+    $.ajax({
+      url:
+        '/api/tax-number-validation?' +
+        $.param({ product, taxNumber, couponCode }),
+      type: 'GET',
 
-        success: function (response) {
-          $('#tax-number-error').html('');
-          // Handle success response
-          console.log('API response:', response);
+      success: function (response) {
+        $('#tax-number-error').html('');
+        // Handle success response
+        console.log('API response:', response);
 
-          if (inputSelector === '#order_tax') {
-            $(inputSelector).addClass('border border-success');
-            $('#submit-button').prop('disabled', false);
-          }
+        if (inputSelector === '#order_tax') {
+          $(inputSelector).addClass('border border-success');
+          $('#submit-button').prop('disabled', false);
+        }
 
-          $('#final-price').html(response.price);
-        },
-        error: function (error) {
-          // Retrieve the error message from the response
-          const errorMessage = error.responseText;
-          $('#tax-number-error').html(errorMessage);
-          if (inputSelector === '#order_tax') {
-            $('#submit-button').prop('disabled', true);
-          }
-        },
-      });
-    } else {
-      $(errorSelector).html('Should Not Be Empty');
-      if (inputSelector === '#order_tax') {
-        $('#submit-button').prop('disabled', true);
-      }
-    }
+        $('#final-price').html(response.price);
+      },
+      error: function (error) {
+        // Retrieve the error message from the response
+        const errorMessage = error.responseText;
+        $('#tax-number-error').html(errorMessage);
+        $('#final-price').html('');
+
+        if (inputSelector === '#order_tax') {
+          $('#submit-button').prop('disabled', true);
+        }
+      },
+    });
   }
+  $('#submit-button').on('click', function () {
+    const product = $('#order_product').val();
+    const taxNumber = $('#order_tax').val();
+    const couponCode = $('#order_coupon').val();
+    const paymentProcessor = $('#order_paymentProcessor').val();
+
+    if (!taxNumber) {
+      return;
+    }
+    $('#submit-button').prop('disabled', true);
+
+    var postData = {
+      product,
+      taxNumber,
+      couponCode,
+      paymentProcessor,
+    };
+
+    $.ajax({
+      type: 'POST',
+      url: '/api/create-order',
+      contentType: 'application/json',
+      data: JSON.stringify(postData),
+      success: function () {
+        window.location.href = '/success';
+      },
+
+      error: function (error) {
+        // Handle error if the AJAX request fails
+
+        const errorMessage = error.responseText;
+
+        alert(errorMessage);
+        window.location.href = '/';
+      },
+    });
+  });
 });

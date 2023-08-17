@@ -19,9 +19,6 @@ class Order
     private ?Product $product = null;
 
     #[ORM\Column]
-    private ?int $quantity = null;
-
-    #[ORM\Column]
     private ?int $price = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
@@ -29,9 +26,6 @@ class Order
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     private ?Coupon $coupon = null;
-
-    #[ORM\Column]
-    private ?int $total = null;
 
     #[ORM\ManyToOne(inversedBy: 'orders')]
     private ?PaymentProcessor $paymentProcessor = null;
@@ -49,18 +43,6 @@ class Order
     public function setProduct(?Product $product): static
     {
         $this->product = $product;
-
-        return $this;
-    }
-
-    public function getQuantity(): ?int
-    {
-        return $this->quantity;
-    }
-
-    public function setQuantity(int $quantity): static
-    {
-        $this->quantity = $quantity;
 
         return $this;
     }
@@ -101,17 +83,6 @@ class Order
         return $this;
     }
 
-    public function getTotal(): ?int
-    {
-        return $this->total;
-    }
-
-    public function setTotal(int $total): static
-    {
-        $this->total = $total;
-
-        return $this;
-    }
 
     public function getPaymentProcessor(): ?PaymentProcessor
     {

@@ -15,24 +15,28 @@ class TaxFixtures extends Fixture
             'country'   => 'Germany',
             'value'     => 19,
             'countryCode' => 'DE',
+            'pattern' => '^[A-Za-z]{2}\d{9}$'
         ]);
 
         TaxFactory::createOne([
             'country'   => 'Italy',
             'value'     => 22,
             'countryCode' => 'IT',
+            'pattern' => '^[A-Za-z]{2}\d{11}$'
         ]);
 
         TaxFactory::createOne([
             'country'   => 'France',
             'value'     => 20,
             'countryCode' => 'FR',
+            'pattern' => '^[A-Za-z]{2}\d{9}$'
         ]);
 
         TaxFactory::createOne([
             'country'   => 'Greece',
             'value'     => 24,
             'countryCode' => 'GR',
+            'pattern' => '^[A-Za-z]{4}\d{9}$'
         ]);
 
         $manager->flush();

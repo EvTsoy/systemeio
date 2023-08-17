@@ -27,6 +27,9 @@ class Tax
     #[ORM\OneToMany(mappedBy: 'tax', targetEntity: Order::class)]
     private Collection $orders;
 
+    #[ORM\Column(length: 255)]
+    private ?string $pattern = null;
+
     public function __construct()
     {
         $this->orders = new ArrayCollection();
@@ -99,6 +102,18 @@ class Tax
                 $order->setTax(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPattern(): ?string
+    {
+        return $this->pattern;
+    }
+
+    public function setPattern(string $pattern): static
+    {
+        $this->pattern = $pattern;
 
         return $this;
     }
