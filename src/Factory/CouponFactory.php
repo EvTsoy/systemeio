@@ -47,7 +47,7 @@ final class CouponFactory extends ModelFactory
     protected function getDefaults(): array
     {
         return [
-            'code' => self::faker()->word(),
+            'code' => self::faker()->word() . self::faker()->numberBetween(100, 200),
             'type' => CouponTypeFactory::random(),
             'value' => self::faker()->numberBetween(10, 100),
         ];

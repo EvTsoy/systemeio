@@ -14,25 +14,25 @@ class TaxFixtures extends Fixture
         TaxFactory::createOne([
             'country'   => 'Germany',
             'value'     => 19,
-            'taxNumber' => 'DE',
+            'countryCode' => 'DE',
         ]);
 
         TaxFactory::createOne([
             'country'   => 'Italy',
             'value'     => 22,
-            'taxNumber' => 'IT',
+            'countryCode' => 'IT',
         ]);
 
         TaxFactory::createOne([
             'country'   => 'France',
             'value'     => 20,
-            'taxNumber' => 'FR',
+            'countryCode' => 'FR',
         ]);
 
         TaxFactory::createOne([
             'country'   => 'Greece',
             'value'     => 24,
-            'taxNumber' => 'GR',
+            'countryCode' => 'GR',
         ]);
 
         $manager->flush();

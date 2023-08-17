@@ -33,6 +33,9 @@ class Order
     #[ORM\Column]
     private ?int $total = null;
 
+    #[ORM\ManyToOne(inversedBy: 'orders')]
+    private ?PaymentProcessor $paymentProcessor = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +109,18 @@ class Order
     public function setTotal(int $total): static
     {
         $this->total = $total;
+
+        return $this;
+    }
+
+    public function getPaymentProcessor(): ?PaymentProcessor
+    {
+        return $this->paymentProcessor;
+    }
+
+    public function setPaymentProcessor(?PaymentProcessor $paymentProcessor): static
+    {
+        $this->paymentProcessor = $paymentProcessor;
 
         return $this;
     }

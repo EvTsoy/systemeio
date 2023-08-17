@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Order;
 use App\Form\OrderType;
+use App\Repository\PaymentProcessorRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,12 +15,16 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_base')]
     public function index(
         ProductRepository $productRepository,
+        PaymentProcessorRepository $paymentProcessorRepository
     ): Response
     {
         $order = new Order();
         $products = $productRepository->findAll();
+        $paymentProcessors = $paymentProcessorRepository->findAll();
+
         $form = $this->createForm(OrderType::class, $order, [
-            'products' => $products
+            'products' => $products,
+            'paymentProcessors' => $paymentProcessors,
         ]);
 
         return $this->render('home/index.html.twig', [

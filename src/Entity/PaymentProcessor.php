@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\TaxRepository;
+use App\Repository\PaymentProcessorRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: TaxRepository::class)]
-class Tax
+#[ORM\Entity(repositoryClass: PaymentProcessorRepository::class)]
+class PaymentProcessor
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,15 +16,9 @@ class Tax
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $country = null;
+    private ?string $title = null;
 
-    #[ORM\Column]
-    private ?int $value = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $countryCode = null;
-
-    #[ORM\OneToMany(mappedBy: 'tax', targetEntity: Order::class)]
+    #[ORM\OneToMany(mappedBy: 'paymentProcessor', targetEntity: Order::class)]
     private Collection $orders;
 
     public function __construct()
@@ -37,38 +31,14 @@ class Tax
         return $this->id;
     }
 
-    public function getCountry(): ?string
+    public function getTitle(): ?string
     {
-        return $this->country;
+        return $this->title;
     }
 
-    public function setCountry(string $country): static
+    public function setTitle(string $title): static
     {
-        $this->country = $country;
-
-        return $this;
-    }
-
-    public function getValue(): ?int
-    {
-        return $this->value;
-    }
-
-    public function setValue(int $value): static
-    {
-        $this->value = $value;
-
-        return $this;
-    }
-
-    public function getCountryCode(): ?string
-    {
-        return $this->countryCode;
-    }
-
-    public function setCountryCode(string $countryCode): static
-    {
-        $this->countryCode = $countryCode;
+        $this->title = $title;
 
         return $this;
     }
@@ -85,7 +55,7 @@ class Tax
     {
         if (!$this->orders->contains($order)) {
             $this->orders->add($order);
-            $order->setTax($this);
+            $order->setPaymentProcessor($this);
         }
 
         return $this;
@@ -95,8 +65,8 @@ class Tax
     {
         if ($this->orders->removeElement($order)) {
             // set the owning side to null (unless already changed)
-            if ($order->getTax() === $this) {
-                $order->setTax(null);
+            if ($order->getPaymentProcessor() === $this) {
+                $order->setPaymentProcessor(null);
             }
         }
 

@@ -48,7 +48,7 @@ final class TaxFactory extends ModelFactory
     {
         return [
             'country' => self::faker()->text(255),
-            'taxNumber' => self::faker()->text(255),
+            'countryCode' => self::faker()->text(255),
             'value' => self::faker()->randomNumber(),
         ];
     }

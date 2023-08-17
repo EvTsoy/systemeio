@@ -9,9 +9,21 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Buy Product</h1>
-    {{ form_row(form.product) }}
-    {{ form_widget(form._token) }} {# Include CSRF token #}
+    <div class="form-group mb-5">
+        <h1>Buy Product</h1>
+        {{ form_start(form, { 'attr' : { 'class': 'form-control' }}) }}
+        {{ form_row(form.product, { 'attr' : { 'class': 'form-control mb-3' }}) }}
+        {{ form_row(form.tax, { 'attr' : { 'class': 'form-control' }}) }}
+        <small id="tax-number-error" class="text-danger"></small>
+        {{ form_row(form.coupon, { 'attr' : { 'class': 'form-control' }}) }}
+        {{ form_row(form.paymentProcessor, { 'attr' : { 'class': 'form-control mb-3' }}) }}
+        {{ form_widget(form._token) }}
+        {{ form_end(form) }}
+    </div>
+
+    <h3 class="mb-3">Final Price: <span id="final-price"></span></h3>
+    <button type="button" class="btn btn-success" id="submit-button" disabled>Submit</button>
+
 </div>
 
 {% endblock %}
